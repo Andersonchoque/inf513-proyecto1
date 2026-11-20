@@ -1,0 +1,68 @@
+# =====================================================================
+#  Batería de pruebas: cada línea es el ASUNTO de un correo.
+#  Ejecutar en local:   ./local.sh reiniciar && ./local.sh < pruebas/comandos.txt
+# =====================================================================
+
+# --- Ayuda ---
+AYUDA["MAT"]
+
+# --- CU1: usuarios (contraseña cifrada con BCrypt, nunca se lista) ---
+INSUSU["Juan Carlos Pérez Seras","JuanPerez@UAGRM.edu.bo","71055123","2","true","secreto123"]
+LISUSU["*"]
+LISUSU["email","uagrm"]
+MODUSU["2","Juan Carlos Pérez","juanperez@uagrm.edu.bo","71055124","2","si",""]
+# unicidad (correo repetido)
+INSUSU["Otro Juan","juanperez@uagrm.edu.bo","","2","true","otraclave1"]
+# clave foránea inexistente
+INSUSU["Ana","ana@gmail.com","","99","true","clave123"]
+# contraseña corta y correo inválido
+INSUSU["Ana","ana@gmail.com","","2","true","123"]
+INSUSU["Ana","ana(arroba)gmail.com","","2","true","clave1234"]
+
+# --- CU3: malla curricular con espacios extra, minúsculas y tildes ---
+   insmat [ "ADM-300" ,  "Administración II"  , "3","5","4","2","obligatoria",""]
+INSMAT["ADM-301","Gestión del Talento Humano","3","5","4","2","Electiva","Incluye \"casos\" reales"]
+LISMAT["semestre","3"]
+INSPRE["13","7"]
+INSPRE["13","13"]
+LISPRE["materia_id","13"]
+INSCAL["Exámenes finales","Segundo parcial y finales","2026-12-01","2026-11-20","examenes","2-2026"]
+INSCAL["Exámenes finales","Segundo parcial y finales","2026-11-20","2026-12-01","examenes","2-2026"]
+
+# --- CU6: noticias (slug automático y único) ---
+INSNOT["1","1","Feria de Emprendimiento 2026","","Más de 40 emprendimientos","Contenido de la noticia","","2026-11-20","publicado","si"]
+INSNOT["1","1","Feria de Emprendimiento 2026","","Segunda nota con el mismo título","","","2026-11-21","borrador","no"]
+LISNOT["*"]
+INSEVE["Congreso de Administración","","congreso","3 días","2026-12-05","09:00","8:30","Auditorio FCEE","","",""]
+INSEVE["Congreso de Administración","","congreso","3 días","2026-12-05","09:00","12:30","Auditorio FCEE","","https://inscripciones.uagrm.edu.bo",""]
+
+# --- CU5: graduados (opciones válidas) ---
+INSGRA["","Sofía Paz","4715292","209876543","2024","tesis","dependiente","Banco Ganadero","Analista","Santa Cruz","sofiapaz@gmail.com","77001122",""]
+INSGRA["","Luis Vaca","5512345","","2025","","trabajando","","","","luis@gmail.com","",""]
+
+# --- CU7: consultas y búsqueda global ---
+INSCON["1","Mariana López","mariana@gmail.com","70123456","¿Cuáles son los requisitos de inscripción?","",""]
+MODCON["1","1","Mariana López","mariana@gmail.com","70123456","¿Cuáles son los requisitos de inscripción?","respondida","Debe presentar su título de bachiller."]
+BUSCAR["emprend"]
+
+# --- Eliminación (con y sin dependencias) ---
+ELIMAT["1"]
+ELIROL["99"]
+ELIPRE["13","7"]
+
+# --- CU8: reportes ---
+REPGEN["*"]
+REPCON["2026-01-01","2026-12-31"]
+REPGRA["*"]
+REPBIT["*"]
+
+# --- Errores de sintaxis ---
+LISUSU[*]
+INSUSU["Juan","juan@x.com"
+LISUSU["*"] extra
+LISXYZ["*"]
+LISTUSU["*"]
+INSUSU["Juan" "juan@x.com"]
+LISUSU
+Re: LISROL["*"]
+LISUSU["campo","valor","otro"]
